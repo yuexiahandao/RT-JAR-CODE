@@ -1,107 +1,94 @@
-/*     */ package com.sun.beans.decoder;
-/*     */ 
-/*     */ public abstract class ElementHandler
-/*     */ {
-/*     */   private DocumentHandler owner;
-/*     */   private ElementHandler parent;
-/*     */   private String id;
-/*     */ 
-/*     */   public final DocumentHandler getOwner()
-/*     */   {
-/*  48 */     return this.owner;
-/*     */   }
-/*     */ 
-/*     */   final void setOwner(DocumentHandler paramDocumentHandler)
-/*     */   {
-/*  60 */     if (paramDocumentHandler == null) {
-/*  61 */       throw new IllegalArgumentException("Every element should have owner");
-/*     */     }
-/*  63 */     this.owner = paramDocumentHandler;
-/*     */   }
-/*     */ 
-/*     */   public final ElementHandler getParent()
-/*     */   {
-/*  72 */     return this.parent;
-/*     */   }
-/*     */ 
-/*     */   final void setParent(ElementHandler paramElementHandler)
-/*     */   {
-/*  84 */     this.parent = paramElementHandler;
-/*     */   }
-/*     */ 
-/*     */   protected final Object getVariable(String paramString)
-/*     */   {
-/*  94 */     if (paramString.equals(this.id)) {
-/*  95 */       ValueObject localValueObject = getValueObject();
-/*  96 */       if (localValueObject.isVoid()) {
-/*  97 */         throw new IllegalStateException("The element does not return value");
-/*     */       }
-/*  99 */       return localValueObject.getValue();
-/*     */     }
-/* 101 */     return this.parent != null ? this.parent.getVariable(paramString) : this.owner.getVariable(paramString);
-/*     */   }
-/*     */ 
-/*     */   protected Object getContextBean()
-/*     */   {
-/* 112 */     if (this.parent != null) {
-/* 113 */       localObject = this.parent.getValueObject();
-/* 114 */       if (!((ValueObject)localObject).isVoid()) {
-/* 115 */         return ((ValueObject)localObject).getValue();
-/*     */       }
-/* 117 */       throw new IllegalStateException("The outer element does not return value");
-/*     */     }
-/* 119 */     Object localObject = this.owner.getOwner();
-/* 120 */     if (localObject != null) {
-/* 121 */       return localObject;
-/*     */     }
-/* 123 */     throw new IllegalStateException("The topmost element does not have context");
-/*     */   }
-/*     */ 
-/*     */   public void addAttribute(String paramString1, String paramString2)
-/*     */   {
-/* 139 */     if (paramString1.equals("id"))
-/* 140 */       this.id = paramString2;
-/*     */     else
-/* 142 */       throw new IllegalArgumentException("Unsupported attribute: " + paramString1);
-/*     */   }
-/*     */ 
-/*     */   public void startElement()
-/*     */   {
-/*     */   }
-/*     */ 
-/*     */   public void endElement()
-/*     */   {
-/* 169 */     ValueObject localValueObject = getValueObject();
-/* 170 */     if (!localValueObject.isVoid()) {
-/* 171 */       if (this.id != null) {
-/* 172 */         this.owner.setVariable(this.id, localValueObject.getValue());
-/*     */       }
-/* 174 */       if (isArgument())
-/* 175 */         if (this.parent != null)
-/* 176 */           this.parent.addArgument(localValueObject.getValue());
-/*     */         else
-/* 178 */           this.owner.addObject(localValueObject.getValue());
-/*     */     }
-/*     */   }
-/*     */ 
-/*     */   public void addCharacter(char paramChar)
-/*     */   {
-/* 191 */     if ((paramChar != ' ') && (paramChar != '\n') && (paramChar != '\t') && (paramChar != '\r'))
-/* 192 */       throw new IllegalStateException("Illegal character with code " + paramChar);
-/*     */   }
-/*     */ 
-/*     */   protected void addArgument(Object paramObject)
-/*     */   {
-/* 203 */     throw new IllegalStateException("Could not add argument to simple element");
-/*     */   }
-/*     */ 
-/*     */   protected boolean isArgument()
-/*     */   {
-/* 215 */     return this.id == null;
-/*     */   }
-/*     */ 
-/*     */   protected abstract ValueObject getValueObject();
-/*     */ }
+package com.sun.beans.decoder;
+
+public abstract class ElementHandler {
+    private DocumentHandler owner;
+    private ElementHandler parent;
+    private String id;
+
+    public final DocumentHandler getOwner() {
+        return this.owner;
+    }
+
+    final void setOwner(DocumentHandler paramDocumentHandler) {
+        if (paramDocumentHandler == null) {
+            throw new IllegalArgumentException("Every element should have owner");
+        }
+        this.owner = paramDocumentHandler;
+    }
+
+    public final ElementHandler getParent() {
+        return this.parent;
+    }
+
+    final void setParent(ElementHandler paramElementHandler) {
+        this.parent = paramElementHandler;
+    }
+
+    protected final Object getVariable(String paramString) {
+        if (paramString.equals(this.id)) {
+            ValueObject localValueObject = getValueObject();
+            if (localValueObject.isVoid()) {
+                throw new IllegalStateException("The element does not return value");
+            }
+            return localValueObject.getValue();
+        }
+        return this.parent != null ? this.parent.getVariable(paramString) : this.owner.getVariable(paramString);
+    }
+
+    protected Object getContextBean() {
+        if (this.parent != null) {
+            localObject = this.parent.getValueObject();
+            if (!((ValueObject) localObject).isVoid()) {
+                return ((ValueObject) localObject).getValue();
+            }
+            throw new IllegalStateException("The outer element does not return value");
+        }
+        Object localObject = this.owner.getOwner();
+        if (localObject != null) {
+            return localObject;
+        }
+        throw new IllegalStateException("The topmost element does not have context");
+    }
+
+    public void addAttribute(String paramString1, String paramString2) {
+        if (paramString1.equals("id"))
+            this.id = paramString2;
+        else
+            throw new IllegalArgumentException("Unsupported attribute: " + paramString1);
+    }
+
+    public void startElement() {
+    }
+
+    public void endElement() {
+        ValueObject localValueObject = getValueObject();
+        if (!localValueObject.isVoid()) {
+            if (this.id != null) {
+                this.owner.setVariable(this.id, localValueObject.getValue());
+            }
+            if (isArgument())
+                if (this.parent != null)
+                    this.parent.addArgument(localValueObject.getValue());
+                else
+                    this.owner.addObject(localValueObject.getValue());
+        }
+    }
+
+    public void addCharacter(char paramChar) {
+        if ((paramChar != ' ') && (paramChar != '\n') && (paramChar != '\t') && (paramChar != '\r'))
+            throw new IllegalStateException("Illegal character with code " + paramChar);
+    }
+
+    protected void addArgument(Object paramObject) {
+        throw new IllegalStateException("Could not add argument to simple element");
+    }
+
+    protected boolean isArgument() {
+        return this.id == null;
+    }
+
+    protected abstract ValueObject getValueObject();
+}
 
 /* Location:           C:\Program Files\Java\jdk1.7.0_79\jre\lib\rt.jar
  * Qualified Name:     com.sun.beans.decoder.ElementHandler
