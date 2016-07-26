@@ -2,15 +2,14 @@ package java.lang.management;
 
 import java.util.List;
 
-public abstract interface PlatformLoggingMXBean extends PlatformManagedObject
-{
-  public abstract List<String> getLoggerNames();
+public abstract interface PlatformLoggingMXBean extends PlatformManagedObject {
+    public abstract List<String> getLoggerNames();
 
-  public abstract String getLoggerLevel(String paramString);
+    public abstract String getLoggerLevel(String paramString);
 
-  public abstract void setLoggerLevel(String paramString1, String paramString2);
+    public abstract void setLoggerLevel(String paramString1, String paramString2);
 
-  public abstract String getParentLoggerName(String paramString);
+    public abstract String getParentLoggerName(String paramString);
 }
 
 /* Location:           C:\Program Files\Java\jdk1.7.0_79\jre\lib\rt.jar

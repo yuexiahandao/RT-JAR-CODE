@@ -7,8 +7,7 @@ import java.lang.annotation.Target;
 
 @Target({java.lang.annotation.ElementType.METHOD})
 @Retention(RetentionPolicy.SOURCE)
-public @interface Override
-{
+public @interface Override {
 }
 
 /* Location:           C:\Program Files\Java\jdk1.7.0_79\jre\lib\rt.jar

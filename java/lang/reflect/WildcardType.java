@@ -1,10 +1,9 @@
 package java.lang.reflect;
 
-public abstract interface WildcardType extends Type
-{
-  public abstract Type[] getUpperBounds();
+public abstract interface WildcardType extends Type {
+    public abstract Type[] getUpperBounds();
 
-  public abstract Type[] getLowerBounds();
+    public abstract Type[] getLowerBounds();
 }
 
 /* Location:           C:\Program Files\Java\jdk1.7.0_79\jre\lib\rt.jar

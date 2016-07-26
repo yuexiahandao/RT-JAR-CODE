@@ -9,8 +9,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({java.lang.annotation.ElementType.CONSTRUCTOR, java.lang.annotation.ElementType.METHOD})
-public @interface SafeVarargs
-{
+public @interface SafeVarargs {
 }
 
 /* Location:           C:\Program Files\Java\jdk1.7.0_79\jre\lib\rt.jar

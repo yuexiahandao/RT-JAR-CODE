@@ -7,8 +7,7 @@ import java.lang.annotation.Target;
 
 @Target({java.lang.annotation.ElementType.METHOD, java.lang.annotation.ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
-@interface DontInline
-{
+@interface DontInline {
 }
 
 /* Location:           C:\Program Files\Java\jdk1.7.0_79\jre\lib\rt.jar

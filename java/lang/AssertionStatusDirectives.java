@@ -1,12 +1,11 @@
 package java.lang;
 
-class AssertionStatusDirectives
-{
-  String[] classes;
-  boolean[] classEnabled;
-  String[] packages;
-  boolean[] packageEnabled;
-  boolean deflt;
+class AssertionStatusDirectives {
+    String[] classes;
+    boolean[] classEnabled;
+    String[] packages;
+    boolean[] packageEnabled;
+    boolean deflt;
 }
 
 /* Location:           C:\Program Files\Java\jdk1.7.0_79\jre\lib\rt.jar
