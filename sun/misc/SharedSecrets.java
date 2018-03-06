@@ -17,9 +17,13 @@ import javax.security.auth.kerberos.KeyTab;
  * (without needing to do reflection calls). This is dynamic in a way that if a new enum constant is added to the enum,
  * the getValues() method will return the added enums (no need to change code all over the show).
  *
+ * 该代码通过读取类并返回常量返回枚举常量（无需执行反射调用）。 这是动态的，如果一个新的枚举常量添加到枚举中，
+ * getValues（）方法将返回添加的枚举（无需在整个表演中更改代码）。
+ *
  * 可以查看：http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/sun/misc/SharedSecrets.java
  */
 public class SharedSecrets {
+    // 生成Unsafe
     private static final Unsafe unsafe = Unsafe.getUnsafe();
     private static JavaUtilJarAccess javaUtilJarAccess;
     private static JavaLangAccess javaLangAccess;
